@@ -32,12 +32,17 @@ Use ordinary Excel/half-up rounding for positive prices. Calculate each line amo
 
 ## Excel output
 
-When producing an Excel workbook, create exactly two worksheets, in this order:
+When producing an Excel workbook, choose the worksheet layout based on the number of source order documents:
 
-1. `采购`: original order data, preserved unchanged.
-2. `发货`: linked item name, unit, and quantity; adjusted unit prices using the selected mode and rounding tiers; line amounts; and a final `合计` row.
+- For one source order document, create exactly two worksheets, in this order:
+  1. `采购`: original order data, preserved unchanged.
+  2. `发货`: linked item name, unit, and quantity; adjusted unit prices using the selected mode and rounding tiers; line amounts; and a final `合计` row.
+- For two source order documents, create exactly three worksheets, in this order:
+  1. `采购1`: original data from the first source document.
+  2. `采购2`: original data from the second source document.
+  3. `发货`: combine the order lines from both sources into one normalized shipment table, then apply the same selected pricing mode, unit-price rounding tiers, line amount calculation, and final `合计` as in the one-source workflow.
 
-Use formulas on `发货` to reference `采购` and calculate prices/totals where practical. Verify the two sheet names, representative price tiers, line amounts, and final total. Save the workbook directly to the user's Desktop by default; follow a different location if the user requests one.
+For a two-source order, do not omit either source or create separate shipment totals: the `发货` sheet contains the combined lines and one overall total. Preserve source information in the respective `采购1` and `采购2` sheets. If a source is an image or scan, transcribe its order data into its procurement sheet and preserve the source distinction. Use formulas to reference procurement sheets and calculate prices/totals where practical. The two-source layout changes only the procurement-sheet count and the consolidation of the `发货` sheet; all pricing, rounding, freight, and output-location rules remain unchanged. Verify sheet names and order, inclusion of lines from both sources, representative price tiers, line amounts, and final total. Save the workbook directly to the user's Desktop by default; follow a different location if the user requests one.
 
 ## Freight settlement image
 
