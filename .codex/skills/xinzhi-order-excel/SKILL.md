@@ -55,6 +55,7 @@ If the user supplies an already priced workbook with a `发货` sheet, use its e
 4. For every line, multiply its already adjusted and tier-rounded unit price by `K`. Apply the same tiered rounding again to this new unrounded unit price. Recalculate line amounts from quantity × final rounded unit price, then sum them. Because unit prices are rounded, this final sum may differ from `T1`; use the final sum as the result and do not force a balancing adjustment.
 5. Generate a new PNG table with item, unit, quantity, adjusted unit price, final settlement unit price, line amount, and total. Label the last row `合计`. Keep only the upper order table and total; omit any calculation-basis block below the table.
 6. Name the PNG `<final sum>结算依据.png` (for example, `100结算依据.png`) and save it directly to the Desktop by default. Follow a different location or filename if requested.
+7. The image title may read `运费结算依据`; keep this wording when used.
 
 Do not assume a freight amount. If the user requests only the freight settlement image, create the image without generating another Excel workbook unless they ask for one. Briefly report the pre-rounding freight-inclusive target and the final sum when they differ. After generation, leave the image saved on disk and report its location in chat without opening a right-side preview or dialog.
 
