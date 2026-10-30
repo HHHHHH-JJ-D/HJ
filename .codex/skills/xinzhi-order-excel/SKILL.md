@@ -47,6 +47,8 @@ For a multi-source order, do not omit any source or create separate shipment tot
 
 When the user provides an order and says “运费XX” with a freight amount `F`:
 
+If the user supplies an already priced workbook with a `发货` sheet, use its existing rounded unit prices and grand total as the starting values. These prices already include the selected pricing mode; do not apply the mode multiplier again.
+
 1. Let `T0` be the pre-freight grand total on `发货`, after applying the selected pricing mode and its unit-price rounding.
 2. Calculate the freight-inclusive target `T1 = T0 + F × 1.1`.
 3. Calculate `K = T1 ÷ T0` at full precision. Never round `K` for calculations.
