@@ -9,7 +9,7 @@ metadata:
 
 ## Highest-priority rule
 
-Use the following rule as the primary behavior for file-based freight requests, overriding any earlier conflicting wording: when the user sends an image or Excel file and says `运费XX`, use the supplied file as the starting point and execute only the freight calculation step. Do not rerun the `行致`/`承晟` pricing workflow and do not create a new Excel workbook. Generate only a new settlement-basis image on the Desktop, named `<计算结果>结算依据.png`.
+Use the following rule as the primary behavior for file-based freight requests, overriding any earlier conflicting wording: when the user sends either an image or an Excel file and says `运费XX`, use the supplied file as the starting point and execute only the freight calculation step. Do not rerun the `行致`/`承晟` pricing workflow and do not create a new Excel workbook. Generate only a new settlement-basis image on the Desktop, named `<计算结果>结算依据.png`.
 
 ## Trigger and execution order
 
@@ -23,7 +23,7 @@ Trigger this skill whenever the user's request includes either `行致` or `承�
 
 Do not wait for a separate request to generate the workbook or the `发货` image after `行致` or `承晟` appears. Do not perform the freight step when the user has not supplied a freight amount.
 
-When the user provides an Excel file, an image, or both that may already contain calculated pricing or a prior settlement result, and also says `运费XX`, treat the supplied data as the starting point and execute only the freight settlement step. Do not rerun the `行致`/`承晟` pricing step and do not create a new Excel workbook. Generate only one new settlement-basis PNG on the Desktop, named `<计算结果>结算依据.png`, where `<计算结果>` is the final settlement total.
+When the user provides either an Excel file or an image that may already contain calculated pricing or a prior settlement result, and also says `运费XX`, treat the supplied data as the starting point and execute only the freight settlement step. Do not rerun the `行致`/`承晟` pricing step and do not create a new Excel workbook. Generate only one new settlement-basis PNG on the Desktop, named `<计算结果>结算依据.png`, where `<计算结果>` is the final settlement total.
 
 Use the user's order document (spreadsheet, photo, scan, or handwritten sheet) to prepare a priced order workbook. When the user also provides “运费XX”, perform the freight allocation and create a settlement image.
 
