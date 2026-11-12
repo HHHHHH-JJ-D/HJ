@@ -13,7 +13,7 @@ Trigger this skill whenever the user's request includes either `行致` or `承�
 
 1. Read and extract the order data.
 2. Apply the selected pricing mode and rounding rules.
-3. Generate the Excel workbook and export the `发货` worksheet image to the Desktop, using the filename `<计算结果>结算金额.png`.
+3. Always create a new Excel workbook with procurement worksheets named `采购1` through `采购N` (one numbered sheet per source order document) followed by exactly one `发货` worksheet. Also export a new image of the completed `发货` worksheet to the Desktop, using the filename `<计算结果>结算金额.png`. Save both the new Excel workbook and the new image directly to the Desktop.
 4. If and only if the user also provides a freight amount using `运费XX`, perform the freight settlement calculation and generate the freight settlement image. If no freight amount is provided, skip this step.
 5. Verify the generated files and report their locations.
 
@@ -47,13 +47,13 @@ Use ordinary Excel/half-up rounding for positive prices. Calculate each line amo
 When producing an Excel workbook, choose the worksheet layout based on the number of source order documents:
 
 - For one source order document, create exactly two worksheets, in this order:
-  1. `采购`: original order data, preserved unchanged.
-  2. `发货`: linked item name, unit, and quantity; adjusted unit prices using the selected mode and rounding tiers; line amounts; and a final `合计` row. Show the adjusted unit price under the header `单价`; omit the original source unit price column from `发货`. Original prices remain in the procurement sheet.
+  1. `采购1`: original order data, preserved unchanged.
+  2. `发货`: linked item name, unit, and quantity; adjusted unit prices using the selected mode and rounding tiers; line amounts; and a final `合计` row. Show the adjusted unit price under the header `单价`; omit the original source unit price column from `发货`. Original prices remain in `采购1`.
 - For two or more source order documents, create exactly one procurement worksheet per source, followed by one combined shipment worksheet. For N sources, create exactly N+1 worksheets in this order:
   1. `采购1` through `采购N`: each sheet contains the original data from its corresponding source document, in the order provided.
   2. `发货`: combine the order lines from all N sources into one normalized shipment table, then apply the same selected pricing mode, unit-price rounding tiers, line amount calculation, and final `合计` as in the one-source workflow. Show the adjusted unit price under the header `单价`; omit the original source unit price column from `发货`. Original prices remain in the numbered procurement sheets.
 
-For a multi-source order, do not omit any source or create separate shipment totals: the `发货` sheet contains all lines and one overall total. Preserve source information in the respective numbered procurement sheets. If a source is an image or scan, transcribe its order data into its procurement sheet and preserve the source distinction. Use formulas to reference procurement sheets and calculate prices/totals where practical. The multi-source layout changes only the procurement-sheet count and the consolidation of the `发货` sheet; all pricing, rounding, freight, and output-location rules remain unchanged. Verify sheet names and order, inclusion of lines from every source, representative price tiers, line amounts, and final total. Save the workbook directly to the user's Desktop by default; follow a different location if the user requests one. After generation, leave the result saved on disk and report its location in chat without opening a right-side preview or dialog. Also export the completed `发货` worksheet as an image and save it directly to the user's Desktop by default. Name the image `<计算结果>结算金额.png`, where `<计算结果>` is the final calculated total amount (for example, `178.94结算金额.png`). Follow a different location or filename if the user requests one.
+For a multi-source order, do not omit any source or create separate shipment totals: the `发货` sheet contains all lines and one overall total. Preserve source information in the respective numbered procurement sheets. If a source is an image or scan, transcribe its order data into its procurement sheet and preserve the source distinction. Use formulas to reference procurement sheets and calculate prices/totals where practical. The multi-source layout changes only the procurement-sheet count and the consolidation of the `发货` sheet; all pricing, rounding, freight, and output-location rules remain unchanged. Verify sheet names and order, inclusion of lines from every source, representative price tiers, line amounts, and final total. Save the new workbook and the new `发货` worksheet image directly to the user's Desktop by default; follow a different location if the user requests one. Name the image `<计算结果>结算金额.png`, where `<计算结果>` is the final calculated total amount (for example, `178.94结算金额.png`). After generation, leave both files saved on disk and report their locations in chat without opening a right-side preview or dialog.
 
 ## Freight settlement image
 
