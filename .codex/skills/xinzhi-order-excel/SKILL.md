@@ -7,6 +7,18 @@ metadata:
 
 # 行致 / 承晟订单处理
 
+## Trigger and execution order
+
+Trigger this skill whenever the user's request includes either `行致` or `承晟`. After triggering, execute the workflow in this order:
+
+1. Read and extract the order data.
+2. Apply the selected pricing mode and rounding rules.
+3. Generate the Excel workbook and export the `发货` worksheet image to the Desktop, using the filename `<计算结果>结算金额.png`.
+4. If and only if the user also provides a freight amount using `运费XX`, perform the freight settlement calculation and generate the freight settlement image. If no freight amount is provided, skip this step.
+5. Verify the generated files and report their locations.
+
+Do not wait for a separate request to generate the workbook or the `发货` image after `行致` or `承晟` appears. Do not perform the freight step when the user has not supplied a freight amount.
+
 Use the user's order document (spreadsheet, photo, scan, or handwritten sheet) to prepare a priced order workbook. When the user also provides “运费XX”, perform the freight allocation and create a settlement image.
 
 ## Pricing modes
@@ -45,7 +57,7 @@ For a multi-source order, do not omit any source or create separate shipment tot
 
 ## Freight settlement image
 
-When the user provides an order and says “运费XX” with a freight amount `F`:
+When the user provides an order and says “运费XX” with a freight amount `F`, execute the optional freight step described above:
 
 If the user supplies an already priced workbook with a `发货` sheet, use its existing rounded unit prices and grand total as the starting values. These prices already include the selected pricing mode; do not apply the mode multiplier again.
 
