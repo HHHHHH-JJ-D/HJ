@@ -19,6 +19,8 @@ Trigger this skill whenever the user's request includes either `行致` or `承�
 
 Do not wait for a separate request to generate the workbook or the `发货` image after `行致` or `承晟` appears. Do not perform the freight step when the user has not supplied a freight amount.
 
+When the user provides an Excel file, an image, or both that may already contain calculated pricing or a prior settlement result, and also says `运费XX`, treat the supplied data as the starting point and execute only the freight settlement step. Do not rerun the `行致`/`承晟` pricing step and do not create a new Excel workbook. Generate only one new settlement-basis PNG on the Desktop, named `<计算结果>结算依据.png`, where `<计算结果>` is the final settlement total.
+
 Use the user's order document (spreadsheet, photo, scan, or handwritten sheet) to prepare a priced order workbook. When the user also provides “运费XX”, perform the freight allocation and create a settlement image.
 
 ## Pricing modes
@@ -66,7 +68,7 @@ If the user supplies an already priced workbook with a `发货` sheet, use its e
 3. Calculate `K = T1 ÷ T0` at full precision. Never round `K` for calculations.
 4. For every line, multiply its already adjusted and tier-rounded unit price by `K`. Apply the same tiered rounding again to this new unrounded unit price. Recalculate line amounts from quantity × final rounded unit price, then sum them. Because unit prices are rounded, this final sum may differ from `T1`; use the final sum as the result and do not force a balancing adjustment.
 5. Generate a new PNG table with item, unit, quantity, adjusted unit price, final settlement unit price, line amount, and total. Label the last row `合计`. Keep only the upper order table and total; omit any calculation-basis block below the table.
-6. Name the PNG `<final sum>结算依据.png` (for example, `100结算依据.png`) and save it directly to the Desktop by default. Follow a different location or filename if requested.
+6. Name the PNG `<final sum>结算依据.png` (for example, `100结算依据.png`) and save this new image directly to the Desktop by default. For freight-only requests based on supplied Excel/image inputs, generate only this PNG and do not generate another Excel workbook. Follow a different location or filename if requested.
 7. The image title may read `运费结算依据`; keep this wording when used.
 
 Do not assume a freight amount. If the user requests only the freight settlement image, create the image without generating another Excel workbook unless they ask for one. Briefly report the pre-rounding freight-inclusive target and the final sum when they differ. After generation, leave the image saved on disk and report its location in chat without opening a right-side preview or dialog.
