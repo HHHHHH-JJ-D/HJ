@@ -7,6 +7,10 @@ metadata:
 
 # 行致 / 承晟订单处理
 
+## Highest-priority rule
+
+Use the following rule as the primary behavior for file-based freight requests, overriding any earlier conflicting wording: when the user sends an image or Excel file and says `运费XX`, use the supplied file as the starting point and execute only the freight calculation step. Do not rerun the `行致`/`承晟` pricing workflow and do not create a new Excel workbook. Generate only a new settlement-basis image on the Desktop, named `<计算结果>结算依据.png`.
+
 ## Trigger and execution order
 
 Trigger this skill whenever the user's request includes either `行致` or `承晟`. After triggering, execute the workflow in this order:
